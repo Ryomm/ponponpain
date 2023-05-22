@@ -2,19 +2,19 @@ name: swift-CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   run:
-    runs-on: macos-11
+    runs-on: macos-12
     strategy:
       matrix:
-        xcode: ["12.5.1", "13.0"]
+        xcode: ["13.3.1", "13.4", "13.4.1"]
         subcommand: ["Build", "Test"]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: ${{ matrix.subcommand }}
       run: |
         xcodebuild --version
