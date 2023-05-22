@@ -1,0 +1,26 @@
+name: swift-CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  run:
+    runs-on: macos-11
+    strategy:
+      matrix:
+        xcode: ["12.5.1", "13.0"]
+        subcommand: ["Build", "Test"]
+    steps:
+    - uses: actions/checkout@v2
+    - name: ${{ matrix.subcommand }}
+      run: |
+        xcodebuild --version
+        swift --version
+        swift package --version
+        subcommand=`echo ${{ matrix.subcommand }} | tr '[:upper:]' '[:lower:]'`
+        swift $subcommand -v
+      env:
+        DEVELOPER_DIR: /Applications/Xcode_${{ matrix.xcode }}.app
